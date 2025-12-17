@@ -39,6 +39,7 @@ func handler(writer http.ResponseWriter, request *http.Request) {
 		)
 		return
 	} else if err != nil {
+		log.Println(err)
 		helper.WriteResponse(
 			http.StatusInternalServerError,
 			structs.NewErrorMessage("Failed parsing"),

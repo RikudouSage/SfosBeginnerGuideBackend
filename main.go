@@ -30,6 +30,7 @@ func main() {
 		}
 	}()
 
+	http.HandleFunc("/languages", langHandler)
 	http.HandleFunc("/", handler)
 
 	<-gracefulShutdown
