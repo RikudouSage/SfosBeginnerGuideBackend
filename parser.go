@@ -25,8 +25,9 @@ type ContentItemSection struct {
 }
 
 type ContentItemMeta struct {
-	Title string   `yaml:"title" json:"title"`
-	Links []string `yaml:"links" json:"links"`
+	Title   string   `yaml:"title" json:"title"`
+	Links   []string `yaml:"links" json:"links"`
+	Actions []string `yaml:"actions" json:"actions"`
 }
 
 type ContentItem struct {

@@ -2,6 +2,8 @@
 title: Beginner's guide
 links:
   - installing-apps
+actions:
+  - refresh_repos
 ---
 
 Welcome and congrats on your new SailfishOS device!
