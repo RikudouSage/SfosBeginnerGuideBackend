@@ -11,5 +11,6 @@ var markdown = goldmark.New(
 		extension.GFM,
 		extension.Strikethrough,
 		&frontmatter.Extender{},
+		newSectionSplitter(),
 	),
 )

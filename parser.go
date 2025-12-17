@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"embed"
 	"fmt"
 	"io"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/yuin/goldmark"
 	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/text"
 	"go.abhg.dev/goldmark/frontmatter"
 )
 
@@ -109,18 +109,34 @@ func (receiver *appMdParser) normalizePath(target string, relativeTo string) str
 }
 
 func (receiver *appMdParser) parse(content []byte, currentFile string) (*ContentItem, error) {
-	var buffer bytes.Buffer
-
-	result := &ContentItem{
-		Meta: &ContentItemMeta{},
-	}
+	result := &ContentItem{Meta: &ContentItemMeta{}}
 
 	ctx := parser.NewContext()
-	err := receiver.markdown.Convert(content, &buffer, parser.WithContext(ctx))
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse file: %w", err)
+	_ = receiver.markdown.Parser().Parse(text.NewReader(content), parser.WithContext(ctx))
+
+	sectionsData, _ := ctx.Get(sectionContextKey).(*sectionInfo)
+	if sectionsData == nil {
+		return nil, fmt.Errorf("section splitter did not run")
 	}
-	result.Content = buffer.String()
+
+	introHTML, err := renderNodes(receiver.markdown, content, sectionsData.intro)
+	if err != nil {
+		return nil, fmt.Errorf("failed to render intro content: %w", err)
+	}
+	result.Content = introHTML
+
+	for _, section := range sectionsData.sections {
+		sectionHTML, err := renderNodes(receiver.markdown, content, section.nodes)
+		if err != nil {
+			return nil, fmt.Errorf("failed to render section %s: %w", section.title, err)
+		}
+
+		result.Sections = append(result.Sections, &ContentItemSection{
+			Title:   section.title,
+			Content: sectionHTML,
+		})
+	}
+
 	err = receiver.parseMetadata(ctx, result.Meta)
 	if err != nil {
 		return nil, fmt.Errorf("failed parsing metadata: %w", err)
