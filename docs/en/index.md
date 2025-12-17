@@ -1,10 +1,11 @@
 ---
 title: Beginner's guide
-links: [basic-usage]
+links:
+  - installing-apps
 ---
 
 # Beginner's guide
 
-Welcome and congrats on your new SailfishOS device! In this guide created by the community we'll walk you
+Welcome and congrats on your new SailfishOS device! In this guide created by the community, we'll walk you
 through something that might not be entirely clear when you're coming from a different OS, like Android or
 iOS.
