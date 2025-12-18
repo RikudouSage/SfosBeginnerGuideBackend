@@ -6,5 +6,5 @@ links:
 
 Welcome and congrats on your new SailfishOS device!
 
-In this guide created by the community, we'll walk you through some things that might not be entirely clear
-when you're coming from a different OS, like Android or iOS.
+In this community-made guide, we'll walk you through a few things that might not be obvious
+when you're coming from another OS, like Android or iOS.
