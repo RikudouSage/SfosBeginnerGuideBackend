@@ -5,7 +5,7 @@ that the [app](https://github.com/RikudouSage/SfosBeginnerGuide) knows how to ha
 
 ## Guide
 
-The [docs](docs) directory contains langauge tags as the only elements (for example, [en](docs/en)) which
+The [docs](docs) directory contains language tags as the only elements (for example, [en](docs/en)) which
 in turn contains .md files and other subdirectories.
 
 Each page needs some metadata, at the very least a `title`. See [the English intro](docs/en/index.md) for
