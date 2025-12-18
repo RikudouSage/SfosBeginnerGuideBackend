@@ -2,8 +2,6 @@
 title: Installing Apps
 ---
 
-# Installing Apps
-
 You're most likely used to the App Store or Play Store if you're coming from iOS or Android. You might have
 also used a different store if your device comes equipped with it (Galaxy Store, Huawei Store, etc.).
 
