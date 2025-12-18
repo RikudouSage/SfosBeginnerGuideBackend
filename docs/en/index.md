@@ -1,5 +1,5 @@
 ---
-title: Beginner's guide
+title: Beginner's Guide
 links:
   - installing-apps
 actions:
