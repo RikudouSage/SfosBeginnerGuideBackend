@@ -4,8 +4,8 @@ links:
   - installing-apps
   - basic
   - android
-  - troubleshooting
   - apps
+  - troubleshooting
 actions:
   - settings
 ---
