@@ -2,6 +2,8 @@
 title: Beginner's Guide
 links:
   - installing-apps
+  - basic
+  - android
 actions:
   - settings
 ---
