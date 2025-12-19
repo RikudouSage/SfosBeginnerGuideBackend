@@ -5,6 +5,7 @@ links:
   - basic
   - android
   - troubleshooting
+  - apps
 actions:
   - settings
 ---
