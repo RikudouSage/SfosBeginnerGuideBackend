@@ -42,3 +42,8 @@ I recommend using that.
 5. Launch it
 6. Download packages for each country you're often in
     1. Installing is done by long holding on the country and selecting `Install`
+
+## Troubleshooting
+
+If you still can't get a fix, you might want to give the app [GPSInfo](start-app(harbour-gpsinfo)) a try.
+If you don't have it installed, simply search for it in the [Jolla Store](start-app(store-client)).
