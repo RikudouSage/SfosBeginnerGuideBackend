@@ -3,7 +3,6 @@ title: Beginner's Guide
 links:
   - installing-apps
   - basic
-  - android
   - apps
   - troubleshooting
 actions:
