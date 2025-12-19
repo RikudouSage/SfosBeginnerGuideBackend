@@ -28,14 +28,14 @@ I recommend using that.
 
 ### Official Positioning packages
 
-1. Open the [Jolla Store](start-app:store-client)
+1. Open the [Jolla Store](start-app://store-client)
 2. In the pull-down menu select Search
 3. Search for "Positioning" (without the quotes)
 4. Install the package for your region
 
 ### MLS Manager
 
-1. Open [Storeman](start-app:harbour-storeman)
+1. Open [Storeman](start-app://harbour-storeman)
 2. In the pull-down menu select Search
 3. Search for "MLS Manager"
 4. Install it as per the [instructions](../installing-apps/storeman.md)
@@ -45,5 +45,5 @@ I recommend using that.
 
 ## Troubleshooting
 
-If you still can't get a fix, you might want to give the app [GPSInfo](start-app:harbour-gpsinfo) a try.
-If you don't have it installed, simply search for it in the [Jolla Store](start-app:store-client).
+If you still can't get a fix, you might want to give the app [GPSInfo](start-app://harbour-gpsinfo) a try.
+If you don't have it installed, simply search for it in the [Jolla Store](start-app://store-client).
