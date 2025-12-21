@@ -4,7 +4,6 @@ import (
 	"embed"
 	"fmt"
 	"io"
-	"path"
 	"strings"
 	"time"
 
@@ -80,39 +79,14 @@ func (receiver *appMdParser) parseByPath(targetPath string) (*ContentItem, error
 }
 
 func (receiver *appMdParser) normalizePath(target string, relativeTo string) string {
-	if strings.HasPrefix(target, "docs/") {
-		target = target[len("docs/"):]
-	}
-	if strings.HasPrefix(relativeTo, "docs") {
-		relativeTo = relativeTo[len("docs/"):]
-	}
-
-	target = strings.TrimPrefix(target, "/")
-
-	base := relativeTo
-
-	if strings.HasSuffix(base, ".md") {
-		base = path.Dir(base)
-	}
-
-	target = path.Join(base, target)
-
-	if !strings.HasSuffix(target, ".md") {
-		if !strings.HasSuffix(target, "/") {
-			target += "/"
-		}
-		target += "index.md"
-	}
-
-	target = path.Clean(target)
-
-	return "docs/" + strings.TrimPrefix(target, "/")
+	return normalizePath(target, relativeTo)
 }
 
 func (receiver *appMdParser) parse(content []byte, currentFile string) (*ContentItem, error) {
 	result := &ContentItem{Meta: &ContentItemMeta{}}
 
 	ctx := parser.NewContext()
+	ctx.Set(linkResolverContextKey, currentFile)
 	_ = receiver.markdown.Parser().Parse(text.NewReader(content), parser.WithContext(ctx))
 
 	sectionsData, _ := ctx.Get(sectionContextKey).(*sectionInfo)
