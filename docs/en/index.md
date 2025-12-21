@@ -3,7 +3,6 @@ title: Beginner's Guide
 links:
   - installing-apps
   - basic
-  - apps
   - troubleshooting
 actions:
   - settings
