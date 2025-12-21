@@ -4,6 +4,7 @@ links:
   - installing-apps
   - basic
   - troubleshooting
+  - advanced
 actions:
   - settings
 ---
