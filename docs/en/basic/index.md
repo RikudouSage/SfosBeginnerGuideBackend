@@ -1,6 +1,7 @@
 ---
 title: Basic stuff
 links:
+  - tutorial.md
   - gps.md
   - ../android
   - ../apps
