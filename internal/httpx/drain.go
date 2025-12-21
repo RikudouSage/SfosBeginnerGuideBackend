@@ -1,4 +1,4 @@
-package helper
+package httpx
 
 import (
 	"io"
@@ -11,10 +11,5 @@ func DrainBody(request *http.Request) error {
 		return err
 	}
 
-	err = request.Body.Close()
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return request.Body.Close()
 }

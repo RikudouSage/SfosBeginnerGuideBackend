@@ -1,4 +1,4 @@
-module SfodBeginnerGuide
+module SfosBeginnerGuide
 
 go 1.24.0
 

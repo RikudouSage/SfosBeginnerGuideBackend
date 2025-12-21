@@ -1,4 +1,4 @@
-package main
+package markdown
 
 import (
 	"net/url"
@@ -12,7 +12,7 @@ import (
 	"github.com/yuin/goldmark/util"
 )
 
-var linkResolverContextKey = parser.NewContextKey()
+var LinkResolverContextKey = parser.NewContextKey()
 
 func newLinkResolver() goldmark.Extender { return linkResolver{} }
 
@@ -29,7 +29,7 @@ func (linkResolver) Extend(md goldmark.Markdown) {
 type linkResolverTransformer struct{}
 
 func (linkResolverTransformer) Transform(node *ast.Document, reader text.Reader, parserContext parser.Context) {
-	currentFile, _ := parserContext.Get(linkResolverContextKey).(string)
+	currentFile, _ := parserContext.Get(LinkResolverContextKey).(string)
 	if currentFile == "" {
 		return
 	}
@@ -45,8 +45,8 @@ func (linkResolverTransformer) Transform(node *ast.Document, reader text.Reader,
 		}
 
 		destination := string(link.Destination)
-		if shouldResolveRelativeLink(destination) {
-			resolved := resolveAbsoluteMdLink(destination, currentFile)
+		if ShouldResolveRelativeLink(destination) {
+			resolved := ResolveAbsoluteMarkdownLink(destination, currentFile)
 			if resolved != "" {
 				link.Destination = []byte(resolved)
 			}
@@ -56,7 +56,7 @@ func (linkResolverTransformer) Transform(node *ast.Document, reader text.Reader,
 	})
 }
 
-func normalizePath(target string, relativeTo string) string {
+func NormalizePath(target string, relativeTo string) string {
 	if strings.HasPrefix(target, "docs/") {
 		target = target[len("docs/"):]
 	}
@@ -67,7 +67,6 @@ func normalizePath(target string, relativeTo string) string {
 	target = strings.TrimPrefix(target, "/")
 
 	base := relativeTo
-
 	if strings.HasSuffix(base, ".md") {
 		base = path.Dir(base)
 	}
@@ -86,7 +85,7 @@ func normalizePath(target string, relativeTo string) string {
 	return "docs/" + strings.TrimPrefix(target, "/")
 }
 
-func shouldResolveRelativeLink(destination string) bool {
+func ShouldResolveRelativeLink(destination string) bool {
 	if destination == "" {
 		return false
 	}
@@ -111,13 +110,13 @@ func shouldResolveRelativeLink(destination string) bool {
 	return ext == "" || ext == ".md"
 }
 
-func resolveAbsoluteMdLink(destination string, currentFile string) string {
+func ResolveAbsoluteMarkdownLink(destination string, currentFile string) string {
 	pathPart, fragment, _ := strings.Cut(destination, "#")
 	if pathPart == "" {
 		return ""
 	}
 
-	resolved := normalizePath(pathPart, currentFile)
+	resolved := NormalizePath(pathPart, currentFile)
 	resolved = "document:///" + strings.TrimPrefix(resolved, "docs/")
 
 	if fragment != "" {

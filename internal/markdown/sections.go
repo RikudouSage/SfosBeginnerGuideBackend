@@ -1,4 +1,4 @@
-package main
+package markdown
 
 import (
 	"bytes"
@@ -10,16 +10,16 @@ import (
 	"github.com/yuin/goldmark/util"
 )
 
-var sectionContextKey = parser.NewContextKey()
+var SectionContextKey = parser.NewContextKey()
 
-type sectionInfo struct {
-	intro    []ast.Node
-	sections []sectionRecord
+type SectionInfo struct {
+	Intro    []ast.Node
+	Sections []SectionRecord
 }
 
-type sectionRecord struct {
-	title string
-	nodes []ast.Node
+type SectionRecord struct {
+	Title string
+	Nodes []ast.Node
 }
 
 func newSectionSplitter() goldmark.Extender { return sectionSplitter{} }
@@ -37,7 +37,7 @@ func (sectionSplitter) Extend(md goldmark.Markdown) {
 type sectionTransformer struct{}
 
 func (sectionTransformer) Transform(node *ast.Document, reader text.Reader, parserContext parser.Context) {
-	info := &sectionInfo{}
+	info := &SectionInfo{}
 
 	var currentTitle string
 	var currentNodes []ast.Node
@@ -45,11 +45,11 @@ func (sectionTransformer) Transform(node *ast.Document, reader text.Reader, pars
 	for currentNode := node.FirstChild(); currentNode != nil; currentNode = currentNode.NextSibling() {
 		if heading, ok := currentNode.(*ast.Heading); ok && heading.Level == 2 {
 			if currentTitle == "" {
-				info.intro = append(info.intro, currentNodes...)
+				info.Intro = append(info.Intro, currentNodes...)
 			} else {
-				info.sections = append(info.sections, sectionRecord{
-					title: currentTitle,
-					nodes: currentNodes,
+				info.Sections = append(info.Sections, SectionRecord{
+					Title: currentTitle,
+					Nodes: currentNodes,
 				})
 			}
 
@@ -62,15 +62,15 @@ func (sectionTransformer) Transform(node *ast.Document, reader text.Reader, pars
 	}
 
 	if currentTitle == "" {
-		info.intro = append(info.intro, currentNodes...)
+		info.Intro = append(info.Intro, currentNodes...)
 	} else {
-		info.sections = append(info.sections, sectionRecord{
-			title: currentTitle,
-			nodes: currentNodes,
+		info.Sections = append(info.Sections, SectionRecord{
+			Title: currentTitle,
+			Nodes: currentNodes,
 		})
 	}
 
-	parserContext.Set(sectionContextKey, info)
+	parserContext.Set(SectionContextKey, info)
 }
 
 func headingText(heading *ast.Heading, source []byte) string {
@@ -81,7 +81,7 @@ func headingText(heading *ast.Heading, source []byte) string {
 	return buf.String()
 }
 
-func renderNodes(md goldmark.Markdown, source []byte, nodes []ast.Node) (string, error) {
+func RenderNodes(md goldmark.Markdown, source []byte, nodes []ast.Node) (string, error) {
 	var buf bytes.Buffer
 	for _, n := range nodes {
 		if err := md.Renderer().Render(&buf, source, n); err != nil {
