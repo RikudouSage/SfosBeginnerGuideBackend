@@ -1,0 +1,6 @@
+{
+  "source": "docs/en/installing-apps/aurora.md",
+  "model": "intfloat/multilingual-e5-large",
+  "dim": 0,
+  "chunks": null
+}
