@@ -97,7 +97,13 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: >-
+      ${{
+        always() &&
+        github.ref == 'refs/heads/master' &&
+        needs.build.result == 'success' &&
+        (needs.publish_embeddings.result == 'success' || needs.publish_embeddings.result == 'skipped')
+      }}
     needs: [build, publish_embeddings]
     steps:
       - name: Deploy
