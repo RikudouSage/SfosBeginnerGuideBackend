@@ -25,6 +25,7 @@ also install the original.
 
 - **BitSailor** [*Bitwarden*] – a native app relying on the official Bitwarden CLI tools for connecting
   to the Bitwarden servers.
+- **qmlpass** – a frontend for the native Linux `pass` manager
 
 ## Media
 
