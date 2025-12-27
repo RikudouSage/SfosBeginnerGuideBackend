@@ -2,18 +2,20 @@
 title: GPS
 ---
 
-Getting the GPS work (especially the first time), might not be really straightforward.
+Getting the GPS to work (especially the first time) might not be really straightforward.
 There are multiple ways to make it easier.
 
 > If you're wondering why this is necessary while it's not on Android or iOS, it's because of the
-> mass amount of data the corporations behind the OS have on everything and everyone - they use it
+> mass amount of data the corporations behind the OS have on everything and everyone – they use it
 > to assist the GPS module with getting a fix faster.
 
 ## Fine-tune GPS settings
 
 Go to `Settings -> Location` and switch the Accuracy to `Custom settings`. Afterwards tap
-`Select custom settings` and enable all options
-(`GPS positioning`, `Offline position lock`, `Online position lock`).
+`Select custom settings` and enable the following options:
+
+- GPS positioning
+- Offline position lock
 
 ## Install offline data
 
