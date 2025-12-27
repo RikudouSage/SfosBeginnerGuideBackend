@@ -15,6 +15,7 @@ import (
 	"SfosBeginnerGuide/internal/content"
 	"SfosBeginnerGuide/internal/httpapi"
 	"SfosBeginnerGuide/internal/markdown"
+	"SfosBeginnerGuide/internal/search"
 )
 
 //go:embed docs
@@ -32,11 +33,13 @@ func main() {
 	md := markdown.New()
 	parser := content.NewCachedMarkdownParser(docs, md, 5*time.Minute)
 	languages := content.NewFSLocalizer(docs, "docs")
-	handler := httpapi.NewHandler(parser, languages)
+	searcher := search.NewService(docs)
+	handler := httpapi.NewHandler(parser, languages, searcher)
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/languages", handler.LanguagesList)
 	mux.HandleFunc("/capabilities", handler.Capabilities)
+	mux.HandleFunc("/search/", handler.Search)
 	mux.HandleFunc("/", handler.Content)
 
 	server := &http.Server{

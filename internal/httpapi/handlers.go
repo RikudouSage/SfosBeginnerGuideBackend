@@ -1,14 +1,19 @@
 package httpapi
 
 import (
+	"context"
 	"errors"
 	"log"
 	"net/http"
 	"os"
+	"strconv"
+	"strings"
+	"time"
 
 	"SfosBeginnerGuide/internal/content"
-	. "SfosBeginnerGuide/internal/helper"
+	"SfosBeginnerGuide/internal/helper"
 	"SfosBeginnerGuide/internal/httpx"
+	"SfosBeginnerGuide/internal/search"
 )
 
 type ErrorResponse struct {
@@ -22,10 +27,15 @@ func NewErrorResponse(message string) *ErrorResponse {
 type Handler struct {
 	Parser    content.Parser
 	Languages content.LanguageProvider
+	Searcher  SearchService
 }
 
-func NewHandler(parser content.Parser, languages content.LanguageProvider) *Handler {
-	return &Handler{Parser: parser, Languages: languages}
+type SearchService interface {
+	Search(ctx context.Context, language, query string, limit int) ([]search.Result, error)
+}
+
+func NewHandler(parser content.Parser, languages content.LanguageProvider, searcher SearchService) *Handler {
+	return &Handler{Parser: parser, Languages: languages, Searcher: searcher}
 }
 
 func (receiver *Handler) Content(writer http.ResponseWriter, request *http.Request) {
@@ -88,8 +98,100 @@ func (receiver *Handler) Capabilities(writer http.ResponseWriter, request *http.
 	}
 
 	capabilities := map[string]bool{
-		"searching": BoolEnv("CAPABILITY_SEARCHING", false),
+		"searching": helper.BoolEnv("CAPABILITY_SEARCHING", false),
 	}
 
 	httpx.WriteOK(capabilities, writer)
+}
+
+func (receiver *Handler) Search(writer http.ResponseWriter, request *http.Request) {
+	defer httpx.DrainBody(request)
+
+	if request.Method != http.MethodGet {
+		httpx.WriteJSON(
+			http.StatusMethodNotAllowed,
+			NewErrorResponse("Method not allowed"),
+			writer,
+		)
+		return
+	}
+
+	lang := strings.TrimPrefix(request.URL.Path, "/search")
+	lang = strings.TrimPrefix(lang, "/")
+	lang, _, _ = strings.Cut(lang, "/")
+	if lang == "" {
+		httpx.WriteJSON(
+			http.StatusBadRequest,
+			NewErrorResponse("Missing language in path (expected /search/{lang})"),
+			writer,
+		)
+		return
+	}
+
+	query := strings.TrimSpace(request.URL.Query().Get("q"))
+	if query == "" {
+		httpx.WriteJSON(
+			http.StatusBadRequest,
+			NewErrorResponse("Missing query parameter: q"),
+			writer,
+		)
+		return
+	}
+
+	limit := 20
+	if raw := strings.TrimSpace(request.URL.Query().Get("top")); raw != "" {
+		if parsed, err := strconv.Atoi(raw); err == nil && parsed > 0 {
+			if parsed > 100 {
+				parsed = 100
+			}
+			limit = parsed
+		}
+	}
+
+	ctx, cancel := context.WithTimeout(request.Context(), 2*time.Minute)
+	defer cancel()
+
+	results, err := receiver.Searcher.Search(ctx, lang, query, limit)
+	if err != nil {
+		if errors.Is(err, search.ErrSearchDisabled) {
+			httpx.WriteJSON(
+				http.StatusForbidden,
+				NewErrorResponse("Search capability is disabled"),
+				writer,
+			)
+			return
+		}
+		if errors.Is(err, search.ErrEmbeddingsServerMissing) {
+			httpx.WriteJSON(
+				http.StatusInternalServerError,
+				NewErrorResponse("Search capability is enabled but EMBEDDINGS_SERVER is not configured"),
+				writer,
+			)
+			return
+		}
+		if errors.Is(err, search.ErrLanguageNotFound) {
+			httpx.WriteJSON(
+				http.StatusNotFound,
+				NewErrorResponse("Unknown language"),
+				writer,
+			)
+			return
+		}
+		if errors.Is(err, search.ErrAssetsUnavailable) {
+			httpx.WriteJSON(
+				http.StatusInternalServerError,
+				NewErrorResponse("Search assets are not configured on the server"),
+				writer,
+			)
+			return
+		}
+		httpx.WriteJSON(
+			http.StatusInternalServerError,
+			NewErrorResponse("Failed to search embeddings"),
+			writer,
+		)
+		return
+	}
+
+	httpx.WriteOK(results, writer)
 }

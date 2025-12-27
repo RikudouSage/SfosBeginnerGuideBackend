@@ -29,3 +29,6 @@ warm-models: install-deps
 
 embeddings: warm-models
 	go run internal/cmd/embeddings.go
+
+dev-embeddings-server: install-deps
+	embeddings/.venv/bin/python -m uvicorn embeddings.server:app --host 127.0.0.1 --port 8081 --log-level debug
