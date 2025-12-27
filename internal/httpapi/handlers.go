@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"SfosBeginnerGuide/internal/content"
+	. "SfosBeginnerGuide/internal/helper"
 	"SfosBeginnerGuide/internal/httpx"
 )
 
@@ -72,4 +73,23 @@ func (receiver *Handler) LanguagesList(writer http.ResponseWriter, _ *http.Reque
 	}
 
 	httpx.WriteOK(languages, writer)
+}
+
+func (receiver *Handler) Capabilities(writer http.ResponseWriter, request *http.Request) {
+	defer httpx.DrainBody(request)
+
+	if request.Method != http.MethodGet {
+		httpx.WriteJSON(
+			http.StatusMethodNotAllowed,
+			NewErrorResponse("Method not allowed"),
+			writer,
+		)
+		return
+	}
+
+	capabilities := map[string]bool{
+		"searching": BoolEnv("CAPABILITY_SEARCHING", false),
+	}
+
+	httpx.WriteOK(capabilities, writer)
 }

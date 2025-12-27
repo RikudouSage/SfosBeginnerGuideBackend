@@ -36,6 +36,7 @@ func main() {
 
 	mux := http.NewServeMux()
 	mux.HandleFunc("/languages", handler.LanguagesList)
+	mux.HandleFunc("/capabilities", handler.Capabilities)
 	mux.HandleFunc("/", handler.Content)
 
 	server := &http.Server{
