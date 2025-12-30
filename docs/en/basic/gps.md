@@ -37,12 +37,10 @@ I recommend using that.
 
 ### MLS Manager
 
-1. Open [Storeman](start-app://harbour-storeman)
-2. In the pull-down menu select Search
-3. Search for "MLS Manager"
-4. Install it as per the [instructions](../installing-apps/storeman.md)
-5. Launch it
-6. Download packages for each country you're often in
+1. Open [MLS Manager](storeman://11282) in [Storeman](start-app://harbour-storeman)
+2. Install it as per the [instructions](../installing-apps/storeman.md)
+3. Launch it
+4. Download packages for each country you're often in
     1. Installing is done by long holding on the country and selecting `Install`
 
 ## Troubleshooting
