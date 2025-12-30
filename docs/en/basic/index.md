@@ -5,6 +5,7 @@ links:
   - gps.md
   - ../android
   - ../apps
+  - file-browsing.md
   - abbreviations.md
 ---
 
