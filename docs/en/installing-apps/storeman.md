@@ -4,60 +4,55 @@ actions:
   - storeman
 ---
 
-[Storeman](start-app://harbour-storeman) is a third-party app store provided by the community. You can also
-view it on the web at [openrepos.net](https://openrepos.net).
+[Storeman](start-app://harbour-storeman) is a community-run, third‑party app store. You can also
+browse it on the web at [openrepos.net](https://openrepos.net).
 
 ## Installation
 
-1. Visit [Storeman Installer](https://openrepos.net/content/olf/storeman-installer) in your browser (preferably the [Sailfish Browser](start-app://sailfish-browser) 
-   and not an Android one) and download the latest version. At the time of writing this guide it's
-   [2.3.0-10](https://openrepos.net/sites/default/files/packages/5928/harbour-storeman-installer-2.3.0-release10.noarch.rpm).
-   - You can choose any directory when downloading, for example `Home folder -> Downloads`
-2. Open the downloaded file, and it should ask you whether you want to install it, do so
-   - If you accidentally dismiss it, you need to open it using a [file browser](../basic/file-browsing.md)
-3. Wait a while
+1. Open [Storeman Installer](https://openrepos.net/content/olf/storeman-installer) in your browser
+   (preferably the [Sailfish Browser](start-app://sailfish-browser), not an Android browser) and download
+   the latest version.
+   - You can save it anywhere, for example `Home folder -> Downloads`.
+2. Open the downloaded file. You should see an install prompt—confirm it.
+   - If you dismissed the prompt, open the file again using a [file browser](../basic/file-browsing.md).
+3. Wait.
 
-The last step is crucial, it really is gonna take a while. What you downloaded was an installer for the actual
-Storeman app, that installer will do some checks of what environment you're running in and then install the
-appropriate Storeman. If after about 2 minutes you still see no Storeman on your homescreen
-you can try rebooting your phone.
+The last step is crucial and can take a couple of minutes. The file you downloaded is only an installer. It
+checks your system and then installs the right Storeman app. If you still don’t see Storeman on your
+home screen after about two minutes, try rebooting your phone.
 
 ## Security
 
-OpenRepos and Storeman are inherently **very insecure**. It doesn't that there are viruses or whatnot
-(in fact I've never encountered a malicious app there), but the way it works means you should trust
-the person you're installing apps from and shouldn't install anything blindly.
+OpenRepos and Storeman are **not as safe as the official store**. This does *not* mean that everything
+there is dangerous—personally, I have not seen malware—but the system is based on trust. You should only
+install apps from developers you trust, and you should never install things blindly.
 
 ### The trust model
 
-> If you don't want to read the wall of text below, the TL;DR is: Storeman apps can break your system,
-> be it intentionally or by accident, you should always read the description and comments and make sure
-> you trust the developer.
+> If you don’t want to read the wall of text below, the TL;DR is: Storeman apps can break your system
+> (by accident or on purpose), so always read the description and comments and make sure you trust the
+> developer.
 
-Every developer has their own repository where they publish the apps to. By default, there are no third-party
-repositories enabled, and thus you cannot install anything yet. When you visit an app you like, you must first
-use the pull-down menu to `Add repository` which will then make *all apps from the developer* available to you.
+Each developer has their own repository (think of it as their personal app shelf). By default, no third‑party
+repositories are enabled, so you can’t install anything yet. When you find an app you want, you must first
+use the pull‑down menu and tap `Add repository`. This makes *all apps from that developer* available on your
+phone.
 
-Then you can install them.
+After that, you can install the app.
 
-Note that at its core, all apps are installed the same way, be it Jolla Store or Storeman - Storeman just
-makes the apps available to the system-wide installer when you add a repository. What this means is that
-the apps can actually conflict between Jolla Store and Storeman and usually the one with the bigger version
-number wins. That could potentially **break your system**, be it intentionally (which hasn't happened yet)
-or accidentally (which *has* happened in the past).
+Important detail: Jolla Store and Storeman both use the same system‑wide installer. Storeman simply *adds*
+extra repositories. This means an app from Storeman can replace an app from the Jolla Store if it has a
+higher version number. In rare cases, that can **break your system**—usually by accident, but it is
+possible.
 
-That out of the way, it's not like bad things happen all the time when you install an app from Storeman,
-apps from there work just fine, and systems don't usually break. The above threats are (for now?) mostly
-theoretical but crucial to understand nonetheless. 
+That said, bad things don’t happen all the time. Most Storeman apps work fine, and most phones stay stable.
+The risks above are uncommon but important to understand.
 
 ## Usage
 
-If the **Security** section didn't scare you, welcome! The usage is dead simple – browse apps, search for apps,
-read comments, write comments...
+If the **Security** section didn’t scare you off, welcome! Storeman is easy to use: browse apps, search,
+read comments, and leave comments.
 
-And if some app catches your eye, install them! If you read the Security section, you already know that before
-installing an app you must add the app's repository from the pull-down menu. What this means is that the first
-time you install an app from a new developer, you have to do one extra step before installing: Use pull-down
-menu and choose `Add repository`.
-
-After the repository is added, you use the pull-down menu and choose `Install`.
+When you want to install something, remember the one extra step for new developers:
+1. Open the pull‑down menu and tap `Add repository` (only needed the first time for that developer).
+2. Open the pull‑down menu again and tap `Install`.
