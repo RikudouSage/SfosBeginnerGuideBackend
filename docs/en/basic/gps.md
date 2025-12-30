@@ -48,4 +48,4 @@ I recommend using that.
 ## Troubleshooting
 
 If you still can't get a fix, you might want to give the app [GPSInfo](start-app://harbour-gpsinfo) a try.
-If you don't have it installed, simply search for it in the [Jolla Store](start-app://store-client).
+If you don't have it installed, simply search for it in the [Jolla Store](store-app://harbour-gpsinfo).

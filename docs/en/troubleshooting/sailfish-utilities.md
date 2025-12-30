@@ -3,7 +3,7 @@ title: Sailfish Utilities
 ---
 
 This is an app made by Jolla to help with some troubleshooting. To install it, go to the 
-[Jolla Store](start-app://store-client) and search for "Sailfish Utilities."
+[Jolla Store](store-app://sailfish-utilities) (if the link doesn't work, search for "Sailfish Utilities.").
 
 Afterwards, open [Settings](start-app://jolla-settings) and scroll all the way down to the **Info**
 section, which now has an additional entry called **Utilities**.
