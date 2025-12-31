@@ -13,12 +13,12 @@ Let's take a brief look at each of them!
 
 ## TL;DR
 
-If you don't want to read the descriptions, here's a TL;DR:
+If you don't want to read the descriptions, here's the TL;DR:
 
 - [Jolla Store](jolla-store.md) – the official SailfishOS store
-- [Chum](chum.md) & [Storeman](storeman.md) – unofficial community stores, might contain unsafe apps
-- [F-Droid](f-droid.md) - open source store for Android apps
-- [Aurora](aurora.md) – third-party Google Play client allowing you to install any Play Store apps
+- [Chum](chum.md) & [Storeman](storeman.md) – community stores; apps may be unsafe
+- [F-Droid](f-droid.md) – open-source store for Android apps
+- [Aurora](aurora.md) – third‑party Google Play client that can install any Play Store app
 
 ## Jolla Store
 
