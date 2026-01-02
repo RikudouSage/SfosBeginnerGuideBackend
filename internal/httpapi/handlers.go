@@ -156,7 +156,7 @@ func (receiver *Handler) Search(writer http.ResponseWriter, request *http.Reques
 	if query == "" {
 		httpx.WriteJSON(
 			http.StatusBadRequest,
-			NewErrorResponse("Missing body field: q"),
+			NewErrorResponse("Missing body field: query"),
 			writer,
 		)
 		return
