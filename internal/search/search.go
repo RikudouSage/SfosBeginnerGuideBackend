@@ -25,8 +25,6 @@ const (
 
 type Result struct {
 	Source string  `json:"source"`
-	Index  int     `json:"index"`
-	Text   string  `json:"text"`
 	Score  float32 `json:"score"`
 }
 
@@ -191,8 +189,6 @@ func searchEmbeddings(root fs.FS, query []float32) ([]Result, error) {
 			score := cosineSimilarity(query, queryNorm, chunk.Vector)
 			results = append(results, Result{
 				Source: file.Source,
-				Index:  chunk.Index,
-				Text:   chunk.Text,
 				Score:  score,
 			})
 		}
