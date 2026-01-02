@@ -116,10 +116,20 @@ func Search(ctx context.Context, root fs.FS, client *Client, query string, limit
 	}
 
 	sort.Slice(results, func(i, j int) bool { return results[i].Score > results[j].Score })
-	if len(results) > limit {
-		results = results[:limit]
+
+	seen := make(map[string]struct{}, len(results))
+	deduped := make([]Result, 0, len(results))
+	for _, result := range results {
+		if _, ok := seen[result.Source]; ok {
+			continue
+		}
+		seen[result.Source] = struct{}{}
+		deduped = append(deduped, result)
 	}
-	return results, nil
+	if len(deduped) > limit {
+		deduped = deduped[:limit]
+	}
+	return deduped, nil
 }
 
 type embedRequest struct {
