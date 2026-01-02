@@ -118,7 +118,7 @@ func (receiver *Handler) Search(writer http.ResponseWriter, request *http.Reques
 	}
 
 	type searchRequest struct {
-		Query string `json:"q"`
+		Query string `json:"query"`
 		Top   *int   `json:"top"`
 	}
 
