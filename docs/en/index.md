@@ -1,6 +1,7 @@
 ---
 title: Beginner's Guide
 links:
+  - migrating
   - installing-apps
   - basic
   - troubleshooting
