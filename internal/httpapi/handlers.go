@@ -208,6 +208,7 @@ func (receiver *Handler) Search(writer http.ResponseWriter, request *http.Reques
 			)
 			return
 		}
+		log.Println(err)
 		httpx.WriteJSON(
 			http.StatusInternalServerError,
 			NewErrorResponse("Failed to search embeddings"),
