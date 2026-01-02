@@ -2,11 +2,12 @@ package httpapi
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"io"
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 	"time"
 
@@ -107,13 +108,18 @@ func (receiver *Handler) Capabilities(writer http.ResponseWriter, request *http.
 func (receiver *Handler) Search(writer http.ResponseWriter, request *http.Request) {
 	defer httpx.DrainBody(request)
 
-	if request.Method != http.MethodGet {
+	if request.Method != "QUERY" {
 		httpx.WriteJSON(
 			http.StatusMethodNotAllowed,
-			NewErrorResponse("Method not allowed"),
+			NewErrorResponse("Method not allowed (expected QUERY)"),
 			writer,
 		)
 		return
+	}
+
+	type searchRequest struct {
+		Query string `json:"q"`
+		Top   *int   `json:"top"`
 	}
 
 	lang := strings.TrimPrefix(request.URL.Path, "/search")
@@ -128,24 +134,41 @@ func (receiver *Handler) Search(writer http.ResponseWriter, request *http.Reques
 		return
 	}
 
-	query := strings.TrimSpace(request.URL.Query().Get("q"))
+	var body searchRequest
+	if err := json.NewDecoder(request.Body).Decode(&body); err != nil {
+		if errors.Is(err, io.EOF) {
+			httpx.WriteJSON(
+				http.StatusBadRequest,
+				NewErrorResponse("Missing JSON body"),
+				writer,
+			)
+			return
+		}
+		httpx.WriteJSON(
+			http.StatusBadRequest,
+			NewErrorResponse("Invalid JSON body"),
+			writer,
+		)
+		return
+	}
+
+	query := strings.TrimSpace(body.Query)
 	if query == "" {
 		httpx.WriteJSON(
 			http.StatusBadRequest,
-			NewErrorResponse("Missing query parameter: q"),
+			NewErrorResponse("Missing body field: q"),
 			writer,
 		)
 		return
 	}
 
 	limit := 20
-	if raw := strings.TrimSpace(request.URL.Query().Get("top")); raw != "" {
-		if parsed, err := strconv.Atoi(raw); err == nil && parsed > 0 {
-			if parsed > 100 {
-				parsed = 100
-			}
-			limit = parsed
+	if body.Top != nil && *body.Top > 0 {
+		parsed := *body.Top
+		if parsed > 100 {
+			parsed = 100
 		}
+		limit = parsed
 	}
 
 	ctx, cancel := context.WithTimeout(request.Context(), 2*time.Minute)
