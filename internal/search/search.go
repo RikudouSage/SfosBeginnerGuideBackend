@@ -188,7 +188,7 @@ func searchEmbeddings(root fs.FS, query []float32) ([]Result, error) {
 		for _, chunk := range file.Chunks {
 			score := cosineSimilarity(query, queryNorm, chunk.Vector)
 			results = append(results, Result{
-				Source: file.Source,
+				Source: trimDocsLangPrefix(file.Source),
 				Score:  score,
 			})
 		}
@@ -199,6 +199,22 @@ func searchEmbeddings(root fs.FS, query []float32) ([]Result, error) {
 	}
 
 	return results, nil
+}
+
+func trimDocsLangPrefix(source string) string {
+	if source == "" {
+		return source
+	}
+	normalized := filepath.ToSlash(source)
+	const docsPrefix = "docs/"
+	if strings.HasPrefix(normalized, docsPrefix) {
+		rest := strings.TrimPrefix(normalized, docsPrefix)
+		if slash := strings.IndexByte(rest, '/'); slash >= 0 {
+			return rest[slash+1:]
+		}
+		return rest
+	}
+	return normalized
 }
 
 func cosineSimilarity(query []float32, queryNorm float32, candidate []float32) float32 {
