@@ -24,8 +24,17 @@ also install the original.
 ## Password managers
 
 - [**BitSailor**](app-pages/bitsailor.md) [*Bitwarden*] – a native app relying on the official Bitwarden CLI tools for connecting
-  to the Bitwarden servers.
+  to Bitwarden-compatible servers.
 - **qmlpass** – a frontend for the native Linux `pass` manager
+- **ownKeepass** [*Keepass*] – a native Keepass compatible client
+- **QuayCentral** [*1Password*] – native 1Password client
+
+## One-time Password Apps
+
+- [**BitSailor**](app-pages/bitsailor.md) [*Bitwarden*] - BitSailor can display OTP passwords if you use store them with passwords in BitWarden
+- **Foilauth** – a native OTP client
+- **Yubikey** – store your OTP secrets using Yubikey NFC
+- **SailOTP** – a native OTP client
 
 ## Media
 
