@@ -1,5 +1,7 @@
 ---
 title: Apps
+links:
+  - banks.md
 ---
 
 There are many apps and the awesome community keeps creating more! Here we'll list some of the alternatives
